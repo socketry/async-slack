@@ -1,0 +1,21 @@
+language: ruby
+dist: xenial
+cache: bundler
+matrix:
+  include:
+  - rvm: 2.4
+  - rvm: 2.5
+  - rvm: 2.6
+  - rvm: 2.6
+    env: COVERAGE=PartialSummary,Coveralls
+  - rvm: truffleruby
+  - rvm: jruby-head
+    env: JRUBY_OPTS="--debug -X+O"
+  - rvm: ruby-head
+  allow_failures:
+  - rvm: truffleruby
+  - rvm: ruby-head
+  - rvm: jruby-head
+env:
+  global:
+    secure: RZDLmQ8sPcznMMePAEunRfHflB0+uWipoyP7ylb+F/yrn7iHAfzS5e33ADsXQKwPRmALagZ9HVe5RYUX2VzEMehCPholdyoOkT3xNOfIrV6hJlHYLcu7+PSJgHk9WStKklZqhcnS9HaePwXc93s8Hk1R5qnovDrP62syXMci7MVbwg/61yROx0FNOyTpGqyCe/So6VdVA2mCeldSFS309O6AEKofR7AEJoPIDIPpLH6cftYtYPi6RxEzHd6iD/WA4l5T9dbSGLfwghaO8SKFc7M/eTUx16U4Qyl8kze1aB9x/0xG6tmhTHSdDUrrgToLgRCRHTfFbW/70IXRZMzTjpjwFFaQKV01kbhqIMll7flh1mPCH8J96e+tOyJHFlHryM5Z8q68Vd3lVAYX+B3aJyeqtDLkQcGgDE5zlXComIDcrwhgoCWgXVz/Bmzu9H40X6fQjxFF/ZKcEG25+supYfR0ohi5FEvHXlEWlnH8INoeJMqDZDr8lgBy0iVVr5tHGLr6CU9hIrEYqea8CcbPKaT8hT6q5vS9Jwo52gYPbVwvNnFCRLemkWQAHuZLpV3YiS8o6gHYnXjyENpf9yXu7raHI+GXvVoiHAD71nZbZlM2HTESekaLahV1F+hxO9QuEYFPAYJH0F5iPNK5ByUksM+8DGVh8MlldR7Ni3yGi0M=
