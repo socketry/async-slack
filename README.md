@@ -2,8 +2,7 @@
 
 A simple asynchronous slack client implementation.
 
-[![Build Status](https://secure.travis-ci.org/socketry/async-slack.svg)](http://travis-ci.org/socketry/async-slack)
-[![Coverage Status](https://coveralls.io/repos/socketry/async-slack/badge.svg)](https://coveralls.io/r/socketry/async-slack)
+[![Build Status](https://travis-ci.com/socketry/async-slack.svg?branch=master)](https://travis-ci.com/socketry/async-slack)
 
 ## Installation
 
@@ -21,7 +20,21 @@ Or install it yourself as:
 
 ## Usage
 
-...
+### Real Time WebSockets
+
+It can use HTTP/2 WebSockets to connect to the Slack Real Time interface.
+
+```ruby
+require "async/slack"
+
+Async::Slack.connect(token: token) do |client|
+	client.real_time.connect do |connection|
+		while message = connection.read
+			pp message
+		end
+	end
+end
+```
 
 ## Contributing
 
