@@ -23,6 +23,8 @@
 require 'async/rspec'
 require 'rspec'
 
+require_relative '../../slack'
+
 module Async
 	module Slack
 		module RSpec

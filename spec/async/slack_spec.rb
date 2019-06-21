@@ -20,7 +20,7 @@
 
 require "async/slack/rspec/client"
 
-RSpec.describe Async::WebSocket::Client do
+RSpec.describe Async::Slack::Client do
 	include_context Async::Slack::RSpec::Client
 	
 	it "can send and receive messages" do
@@ -34,7 +34,7 @@ RSpec.describe Async::WebSocket::Client do
 	
 	it "can search for messages" do
 		Async::Slack.connect(token: token) do |client|
-			messages = client.search.messages(query: "Hello World channel:#{channel}").to_a
+			messages = client.search.messages(query: "Hello World").to_a
 			
 			expect(messages).to_not be_empty
 		end
