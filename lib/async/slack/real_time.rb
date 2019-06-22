@@ -46,7 +46,7 @@ module Async
 				
 				pinger = Async do |task|
 					while true
-						task.sleep 2
+						task.sleep 60
 						
 						Async.logger.debug(self) {"Sending ping #{id}..."}
 						connection.write({type: "ping", id: "pinger-#{id}"})
