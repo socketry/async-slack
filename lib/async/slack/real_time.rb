@@ -36,7 +36,29 @@ module Async
 				
 				endpoint = Async::HTTP::Endpoint.parse(url)
 				
-				Async::WebSocket::Client.connect(endpoint, **options, &block)
+				Async::WebSocket::Client.connect(endpoint, **options) do |connection|
+					self.start(connection, &block)
+				end
+			end
+			
+			def start(connection, &block)
+				id = 1
+				
+				pinger = Async do |task|
+					while true
+						task.sleep 2
+						
+						Async.logger.debug(self) {"Sending ping #{id}..."}
+						connection.write({type: "ping", id: "pinger-#{id}"})
+						connection.flush
+						
+						id += 1
+					end
+				end
+				
+				yield connection
+			ensure
+				pinger.stop
 			end
 		end
 	end
