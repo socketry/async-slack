@@ -28,7 +28,7 @@ require_relative 'representation'
 module Async
 	module Slack
 		class RealTime < Representation
-			def connect(&block)
+			def connect(**options, &block)
 				response = self.post
 				
 				parameters = response.read
@@ -36,7 +36,7 @@ module Async
 				
 				endpoint = Async::HTTP::Endpoint.parse(url)
 				
-				Async::WebSocket::Client.connect(endpoint, &block)
+				Async::WebSocket::Client.connect(endpoint, **options, &block)
 			end
 		end
 	end
