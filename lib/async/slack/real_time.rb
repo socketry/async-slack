@@ -24,6 +24,7 @@ require "async/websocket/client"
 require "async/websocket/response"
 
 require_relative 'representation'
+require_relative 'error'
 
 module Async
 	module Slack
@@ -32,12 +33,15 @@ module Async
 				response = self.post
 				
 				parameters = response.read
-				url = parameters[:url]
 				
-				endpoint = Async::HTTP::Endpoint.parse(url)
-				
-				Async::WebSocket::Client.connect(endpoint, **options) do |connection|
-					self.start(connection, &block)
+				if url = parameters[:url]
+					endpoint = Async::HTTP::Endpoint.parse(url)
+					
+					Async::WebSocket::Client.connect(endpoint, **options) do |connection|
+						self.start(connection, &block)
+					end
+				else
+					raise ConnectionError, parameters
 				end
 			end
 			

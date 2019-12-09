@@ -29,7 +29,7 @@ RSpec.describe Async::Slack::Client do
 				message = client.chat.send_message(channel: channel, text: "The time is #{Time.now}")
 				message.value = nil
 			end
-		end
+		end.wait
 	end
 	
 	it "can search for messages" do
@@ -37,6 +37,6 @@ RSpec.describe Async::Slack::Client do
 			messages = client.search.messages(query: "Hello World").to_a
 			
 			expect(messages).to_not be_empty
-		end
+		end.wait
 	end
 end

@@ -42,7 +42,7 @@ module Async
 					end
 					
 					# Was this the last page?
-					break if records.count < count
+					break if records.size < count
 					
 					page += 1
 				end
@@ -69,6 +69,7 @@ module Async
 			end
 			
 			def records
+				binding.irb
 				self.value[:messages][:matches]
 			end
 

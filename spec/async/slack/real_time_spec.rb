@@ -30,6 +30,6 @@ RSpec.describe Async::Slack::RealTime do
 			client.real_time.connect do |connection|
 				expect(connection.read).to be == {:type=>"hello"}
 			end
-		end
+		end.wait
 	end
 end

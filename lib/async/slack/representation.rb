@@ -21,47 +21,29 @@
 # THE SOFTWARE.
 
 require 'async/rest/representation'
-require 'async/rest/wrapper/json'
-require 'async/rest/wrapper/url_encoded'
+require 'async/rest/wrapper/form'
 
 module Async
 	module Slack
-		class Wrapper < Async::REST::Wrapper::JSON
-			def prepare_request(payload, headers)
-				super(nil, headers)
-				
-				if payload
-					headers['content-type'] = Async::REST::Wrapper::URLEncoded::APPLICATION_FORM_URLENCODED
-					
-					::Protocol::HTTP::Body::Buffered.new([
-						::Protocol::HTTP::URL.encode(payload)
-					])
-				end
-			end
-			
+		class Wrapper < Async::REST::Wrapper::Form
 			class Parser < HTTP::Body::Wrapper
 				def join
-					body = ::JSON.parse(super, symbolize_names: true)
+					value = ::JSON.parse(super, symbolize_names: true)
 					
-					if error = body[:error]
-						raise REST::Error, error
+					if error = value[:error]
+						raise Error, error
 					end
 					
-					return body
+					return value
 				end
 			end
 			
-			def wrap_response(response)
-				if body = response.body
-					response.body = Parser.new(body)
-				end
+			def parser_for(response)
+				Parser
 			end
 		end
 		
-		class Representation < Async::REST::Representation
-			def initialize(*args, **options)
-				super(*args, wrapper: Wrapper.new, **options)
-			end
+		class Representation < Async::REST::Representation[Wrapper]
 		end
 	end
 end
