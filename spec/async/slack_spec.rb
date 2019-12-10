@@ -32,7 +32,7 @@ RSpec.describe Async::Slack::Client do
 		end.wait
 	end
 	
-	it "can search for messages" do
+	xit "can search for messages" do
 		Async::Slack.connect(token: token) do |client|
 			messages = client.search.messages(query: "Hello World").to_a
 			
